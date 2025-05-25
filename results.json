@@ -1,7 +1,0 @@
-{
-"QuickFit": {"avg_time_ms": 0.0828, "success_count": 3656, "memory_usage_percent": 100.00},
-"WorstFit": {"avg_time_ms": 0.0831, "success_count": 1805, "memory_usage_percent": 100.00},
-"NextFit": {"avg_time_ms": 0.1938, "success_count": 1839, "memory_usage_percent": 100.00},
-"FirstFit": {"avg_time_ms": 0.0283, "success_count": 1811, "memory_usage_percent": 100.00},
-"BestFit": {"avg_time_ms": 0.0684, "success_count": 1846, "memory_usage_percent": 100.00}
-}

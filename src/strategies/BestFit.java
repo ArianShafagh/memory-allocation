@@ -1,6 +1,10 @@
 package strategies;
 
 public class BestFit implements AllocationStrategy {
+
+    // in bestFit start we are looking for the smallest block that can fit the requested size
+
+
     @Override
     public int findBlock(int[] memory, int size) {
         int bestStart = -1;
@@ -12,7 +16,7 @@ public class BestFit implements AllocationStrategy {
                 if (free == 0) start = i;
                 free++;
             } else {
-                if (free >= size && free < bestSize) {
+                if (free >= size && free < bestSize) {   //free == size was an option but we want the smallest block
                     bestSize = free;
                     bestStart = start;
                 }
