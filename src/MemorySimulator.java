@@ -37,4 +37,9 @@ public class MemorySimulator {
     public double getAverageTime() {
         return totalTime / 1_000_000.0 / successfulRequests; // ms
     }
+    public double getMemoryUsage() {
+        int used = 0;
+        for (int val : memory) if (val == 1) used++;
+        return 100.0 * used / memory.length;
+    }
 }

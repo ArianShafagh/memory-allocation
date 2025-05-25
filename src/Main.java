@@ -6,7 +6,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         int memorySize = 100000;
-        int requestCount = 100000;
+        int requestCount = 10000;
 
         Map<String, AllocationStrategy> strategies = Map.of(
                 "FirstFit", new FirstFit(),
@@ -28,11 +28,13 @@ public class Main {
             results.put(name, new Double[]{
                     sim.getAverageTime(),
                     (double) sim.getSuccessfulRequests(),
+                    sim.getMemoryUsage()
             });
 
-            System.out.printf("[%s] Time: %.4fms, Success: %d\n",
+            System.out.printf("[%s] Time: %.4fms, Success: %d,Usage: %.2f%%\n",
                     name, sim.getAverageTime(),
-                    sim.getSuccessfulRequests());
+                    sim.getSuccessfulRequests(),
+                    sim.getMemoryUsage());
         }
 
         // Save to CSV or JSON

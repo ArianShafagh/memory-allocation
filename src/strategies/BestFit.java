@@ -16,7 +16,7 @@ public class BestFit implements AllocationStrategy {
                 if (free == 0) start = i;
                 free++;
             } else {
-                if (free >= size && free < bestSize) {   //free == size was an option but we want the smallest block
+                if (free >= size && free < bestSize) {
                     bestSize = free;
                     bestStart = start;
                 }
@@ -24,7 +24,6 @@ public class BestFit implements AllocationStrategy {
             }
         }
 
-        // Final check if the last block is best
         if (free >= size && free < bestSize) {
             bestStart = start;
         }
