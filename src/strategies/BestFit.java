@@ -1,33 +1,54 @@
 package strategies;
 
+import java.util.Arrays;
+
 public class BestFit implements AllocationStrategy {
-
-    // in bestFit start we are looking for the smallest block that can fit the requested size
-
-
     @Override
-    public int findBlock(int[] memory, int size) {
-        int bestStart = -1;
-        int bestSize = Integer.MAX_VALUE;
-        int free = 0, start = -1;
-
-        for (int i = 0; i < memory.length; i++) {
-            if (memory[i] == 0) {
-                if (free == 0) start = i;
-                free++;
-            } else {
-                if (free >= size && free < bestSize) {
-                    bestSize = free;
-                    bestStart = start;
+    public AllocationResult findBlock(int[] blockSize, int m, int[] processSize, int n) {
+        int[] allocation = new int[n];
+        Arrays.fill(allocation, -1);
+        int successfulAllocations = 0;
+        int totalMemoryUsed = 0;
+        long startTime = System.nanoTime();
+        for (int i = 0; i < n; i++) {
+            int bestIdx = -1;
+            for (int j = 0; j < m; j++) {
+                if (blockSize[j] >= processSize[i]) {
+                    if (bestIdx == -1 || blockSize[bestIdx] > blockSize[j]) {
+                        bestIdx = j;
+                    }
                 }
-                free = 0;
+            }
+
+            if (bestIdx != -1) {
+                allocation[i] = bestIdx;
+                blockSize[bestIdx] -= processSize[i];
+                successfulAllocations++;
+                totalMemoryUsed += processSize[i];
             }
         }
 
-        if (free >= size && free < bestSize) {
-            bestStart = start;
-        }
+        long endTime = System.nanoTime();
+        double timeTakenMillis = (endTime - startTime) / 1_000_000.0;
 
-        return bestStart;
+        System.out.println("\n--- Best Fit Performance Summary ---");
+        System.out.println("Total Processes          : " + n);
+        System.out.println("Successfully Allocated   : " + successfulAllocations);
+        System.out.println("Failed Allocations       : " + (n - successfulAllocations));
+        System.out.println("Total Memory Used        : " + totalMemoryUsed);
+        System.out.println("Time Taken (ms)          : " + timeTakenMillis);
+        System.out.println("Fragmentation per Block  : " + Arrays.toString(blockSize));
+
+        System.out.println("\nProcess No.\tProcess Size\tBlock no.");
+        for (int i = 0; i < n; i++) {
+            System.out.print("   " + (i + 1) + "\t\t" + processSize[i] + "\t\t");
+            if (allocation[i] != -1)
+                System.out.print(allocation[i] + 1);
+            else
+                System.out.print("Not Allocated");
+            System.out.println();
+        }
+        return new AllocationResult("BestFit", timeTakenMillis, successfulAllocations, totalMemoryUsed);
+
     }
 }

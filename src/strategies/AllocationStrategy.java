@@ -1,5 +1,5 @@
 package strategies;
 
 public interface AllocationStrategy {
-    int findBlock(int[] memory, int size);
+     AllocationResult findBlock(int[] blockSize, int m, int[] processSize, int n);
 }
